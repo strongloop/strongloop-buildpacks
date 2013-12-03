@@ -20,7 +20,7 @@ semver_range=$(cat $build_dir/package.json | $bp_dir/vendor/jq -r .engines.node)
 
 # Resolve node version using semver.io
 #node_version=$(curl --silent --get --data-urlencode "range=${semver_range}" http://semver.io/node/resolve)
-node_version=0.10.22
+node_version=0.10.20
 
 # Recommend using semver ranges in a safe manner
 if [ "$semver_range" == "null" ]; then
