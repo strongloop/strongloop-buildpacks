@@ -1,0 +1,146 @@
+#!/usr/bin/env bash
+# See CONTRIBUTING.md for info on running these tests.
+
+testDetectWithPackageJson() {
+  detect "stable-node"
+  assertCaptured "Node.js"
+  assertCapturedSuccess
+}
+
+testDetectWithoutPackageJson() {
+  detect "no-package-json"
+  assertCapturedError 1 ""
+}
+
+testNoVersion() {
+  compile "no-version"
+  assertCaptured "PRO TIP: Specify a node version in package.json"
+  assertCaptured "Defaulting to latest stable node"
+  assertCapturedSuccess
+}
+
+testDangerousRangeStar() {
+  compile "dangerous-range-star"
+  assertCaptured "PRO TIP: Avoid using semver ranges like '*'"
+  assertCaptured "Requested node range:  *"
+  assertCaptured "Resolved node version: 0.10"
+  assertCapturedSuccess
+}
+
+testDangerousRangeGreaterThan() {
+  compile "dangerous-range-greater-than"
+  assertCaptured "PRO TIP: Avoid using semver ranges starting with '>'"
+  assertCaptured "Requested node range:  >"
+  assertCaptured "Resolved node version: 0.10."
+  assertCapturedSuccess
+}
+
+testRangeWithSpace() {
+  compile "range-with-space"
+  assertCaptured "Requested node range:  >= 0.8.x"
+  assertCaptured "Resolved node version: 0.10."
+  assertCapturedSuccess
+}
+
+testStableVersion() {
+  compile "stable-node"
+  assertNotCaptured "PRO TIP: Avoid using semver"
+  assertNotCaptured "PRO TIP: Specify"
+  assertCaptured "Resolved node version"
+  assertCapturedSuccess
+}
+
+testUnstableVersion() {
+  compile "unstable-version"
+  assertCaptured "Requested node range:  >0.11.0"
+  assertCaptured "Resolved node version: 0.11."
+  assertCapturedSuccess
+}
+
+testProfileCreated() {
+  compile "stable-node"
+  assertCaptured "Building runtime environment"
+  assertFile "export PATH=\"\$HOME/vendor/node/bin:\$HOME/bin:\$HOME/node_modules/.bin:\$PATH\"" ".profile.d/nodejs.sh"
+  assertCapturedSuccess
+}
+
+testInvalidDependency() {
+  compile "invalid-dependency"
+  assertCaptured "not in the npm registry"
+  assertCapturedError 1 ""
+}
+
+testNodeModulesCached() {
+  cache=$(mktmpdir)
+  compile "caching" $cache
+  assertCaptured "Caching node"
+  assertEquals "1" "$(ls -1 $cache/ | wc -l)"
+}
+
+testModulesCheckedIn() {
+  compile "modules-checked-in"
+  assertCaptured "Using existing node_modules directory"
+  assertCaptured "Rebuilding any native dependencies"
+  assertCapturedSuccess
+}
+
+# Pending Tests
+
+# testNodeBinariesAddedToPath() {
+# }
+
+# testNodeModulesRestoredFromCache() {
+# }
+
+# TODO: Figure out how to test stuff like script hooks
+# when restoring node_modules from cache
+# testScriptHooks() {
+#   compile "script-hooks"
+#   assertCaptured "trigger script hooks"
+#   assertCaptured "preinstall hook message"
+#   assertCapturedSuccess
+# }
+
+# testWithoutScriptHooks() {
+#   compile "no-script-hooks"
+#   assertNotCaptured "trigger script hooks"
+#   assertCapturedSuccess
+# }
+
+# testInvalidVersion() {
+#   compile "invalid-node-version"
+#   assertCapturedError 1 "not found among available versions"
+# }
+
+# Utils
+
+pushd $(dirname 0) >/dev/null
+bp_dir=$(pwd)
+popd >/dev/null
+
+source ${bp_dir}/vendor/test-utils/test-utils
+
+mktmpdir() {
+  dir=$(mktemp -t testXXXXX)
+  rm -rf $dir
+  mkdir $dir
+  echo $dir
+}
+
+detect() {
+  capture ${bp_dir}/bin/detect ${bp_dir}/test/$1
+}
+
+compile_dir=""
+
+compile() {
+  compile_dir=$(mktmpdir)
+  cp -r ${bp_dir}/test/$1/* ${compile_dir}/
+  capture ${bp_dir}/bin/compile ${compile_dir} ${2:-$(mktmpdir)}
+}
+
+assertFile() {
+  assertEquals "$1" "$(cat ${compile_dir}/$2)"
+}
+
+source ${bp_dir}/vendor/shunit2/shunit2
