@@ -65,7 +65,7 @@ elif test -d $cache_dir/node_modules; then
   cp -r $cache_dir/node_modules $build_dir/
 fi
 
-# Installing StrongLoop dependencies
+status "Installing StrongLoop dependencies"
 npm install -g strong-cli
 # Make npm output to STDOUT instead of its default STDERR
 status "Installing dependencies"
