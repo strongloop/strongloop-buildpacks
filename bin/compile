@@ -19,8 +19,8 @@ trap cat_npm_debug_log ERR
 semver_range=$(cat $build_dir/package.json | $bp_dir/vendor/jq -r .engines.node)
 
 # Resolve node version using semver.io
-#node_version=$(curl --silent --get --data-urlencode "range=${semver_range}" http://semver.io/node/resolve)
-node_version=0.10.29
+node_version=$(curl --silent --get --data-urlencode "range=${semver_range}" http://semver.io/node/resolve)
+#node_version=0.10.29
 
 # Recommend using semver ranges in a safe manner
 if [ "$semver_range" == "null" ]; then
@@ -65,6 +65,8 @@ elif test -d $cache_dir/node_modules; then
   cp -r $cache_dir/node_modules $build_dir/
 fi
 
+# Installing StrongLoop dependencies
+npm install -g strong-cli
 # Make npm output to STDOUT instead of its default STDERR
 status "Installing dependencies"
 npm install --production 2>&1 | indent
