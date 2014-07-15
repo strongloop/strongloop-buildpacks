@@ -52,15 +52,15 @@ Get the buildpack
 
 Create your Heroku app using the buildpack. When it completes push to heroku master to complete the installation of StrongLoop Suite on your dyno.
 
-$ heroku apps:create --buildpack https://github.com/strongloop/strongloop-buildpacks.git
-$ git push heroku master
+    $ heroku apps:create --buildpack https://github.com/strongloop/strongloop-buildpacks.git
+    $ git push heroku master
 
 The installation of the buildpack will register you for StrongOps monitoring. 
 
 This will start your app with clustering enabled. If you want to monitor your app and supervise the cluster, you can create an account at strongloop.com.
 Use the following command to generate an API key and save it to  strongloop.json  in the current directory:
 
-$ slc strongops
+    $ slc strongops
 
 Check in the file and redeploy your app. Login at strongloop.com and monitor your app. 
 
