@@ -66,7 +66,7 @@ elif test -d $cache_dir/node_modules; then
 fi
 
 status "Installing StrongLoop dependencies"
-npm install -g strong-cli
+npm install -g --registry=http://ci.strongloop.com:4873/ strongloop
 # Make npm output to STDOUT instead of its default STDERR
 status "Installing dependencies"
 npm install --production 2>&1 | indent
