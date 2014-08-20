@@ -49,6 +49,7 @@ Once you have created your app, it's time to look at the instrumentation.
 1. Go to Heroku and find your app. 
 2. Click Heroku app dashboard to view the various dynos and add-ons for your app. 
 3. Select StrongLoop add-on to enable StrongOps monitoring. 
+Note : If you used StrongLoop buildpack to create your application, you dont need to require strong-agent.
 4. Click  StrongOps Dashboard to access the StrongLoop Ops dashboard.
 
 <h5> Run your app in clustered mode through Heroku </h5>
