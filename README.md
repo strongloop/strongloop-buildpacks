@@ -2,9 +2,9 @@
 
 StrongLoop includes LoopBack, an open source mobile framework for creating RESTful, JSON, and other APIs. LoopBack ships with a mobile SDK and can be easily extended via community npm modules.
 
-Also included in StrongLoop is StrongOps, an operational console specifically for Node.js applications. StrongOps provides deep performance monitoring including CPU profiling, EventLoop stats, and more.
+Also included in StrongLoop is StrongOps, an operational console specifically for Node.js applications. StrongOps provides deep performance monitoring including CPU profiling, event loop statistics, and more.
 
-Follow the steps in <a href="http://docs.strongloop.com/display/SLC/Getting+started+with+StrongLoop+Controller">Getting started</a> to install Node and the StrongLoop command-line tool, then create a StrongLoop application on your local system using <a href="http://docs.strongloop.com/display/LB/Create+a+simple+API">LoopBack</a>.
+Follow the steps in <a href="http://docs.strongloop.com/display/SLC/Getting+started+with+StrongLoop+Controller">Getting started</a> to install Node and the StrongLoop command-line tool, then create a StrongLoop application on your local system using the <a href="http://docs.strongloop.com/display/LB/Create+a+simple+API">slc loopback</a> command.
 
 Then follow the steps below to deploy the app to Heroku.
 
@@ -53,10 +53,10 @@ Login with the Heroku command line:
 
 Once you have created your app, it's time to look at the instrumentation.
 
-1. Go to Heroku and find your app. 
-2. Click Heroku app dashboard to view the various dynos and add-ons for your app. 
-3. Select StrongLoop add-on to enable StrongOps monitoring. 
-4. Click  StrongOps Dashboard to access the StrongLoop Ops dashboard.
+1. Go to **Heroku** and find your app. 
+2. Click **Heroku app dashboard** to view the various dynos and add-ons for your app. 
+3. Select **StrongLoop add-on** to enable StrongOps monitoring. 
+4. Click **StrongOps Dashboard** to access the StrongLoop Ops dashboard.
 
 ## Run your app in clustered mode through Heroku
 
