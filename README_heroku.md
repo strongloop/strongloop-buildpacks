@@ -12,11 +12,14 @@ Then follow the steps below to deploy the app to Heroku.
 Create a Procfile in the root directory of your app that contains the following:
     web: slc run
 
-You will need to init and commit your code:
-    
+To deploy, add your application to a Git repository.
+
     $ git init
     $ git add -A
-    $ git commit -m "init"
+    $ git commit -a -m "Initial Commit"
+
+Note : For faster deployment time, delete the application's node-modules directory.
+
 
 <h5> Push to Heroku </h5>
 
@@ -36,7 +39,7 @@ Login with the Heroku command line:
     $ git push heroku master
 
    b. Test it with this command:
-   
+
     $ heroku open
 
 <h5> Check your dashboard on Heroku </h5>
@@ -89,4 +92,5 @@ For more information on how to use StrongLoop Agent API, refer to <a href="http:
 
 
  
+
 
