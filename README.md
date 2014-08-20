@@ -35,8 +35,8 @@ Login with the Heroku command line:
 
    Create your Heroku app using the StrongLoop buildpack with the first command below.  When it completes, push to Heroku master to complete the installation of the node and the strongloop cli tools on your dyno.
 
-    $ heroku apps:create --buildpack https://github.com/strongloop/strongloop-buildpacks.git
-    $ git push heroku master
+        $ heroku apps:create --buildpack https://github.com/strongloop/strongloop-buildpacks.git
+        $ git push heroku master
 
    Test it with this command:
 
@@ -92,6 +92,7 @@ For more information on how to use StrongLoop Agent API, refer to <a href="http:
 
 
  
+
 
 
 
