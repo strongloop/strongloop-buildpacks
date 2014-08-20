@@ -9,11 +9,11 @@ Then follow the steps below to deploy the app to Heroku.
 
 <h5> Create Procfile and commit </h5>
 
-1. Create a Procfile in the root directory of your app that contains the following: 
-web: slc run
+Create a Procfile in the root directory of your app that contains the following:
+    web: slc run
 
-2. You will need to init and commit your code:
-
+You will need to init and commit your code:
+    
     $ git init
     $ git add -A
     $ git commit -m "init"
@@ -22,9 +22,9 @@ web: slc run
 
 The StrongLoop Heroku add-on provisions a monitoring account on StrongOps.
 
-1. If you haven't already done so, register an account on Heroku. 
-2. Install the Heroku Toolbelt.
-3. Login with the Heroku command line: 
+If you haven't already done so, register an account on Heroku. 
+Install the Heroku Toolbelt.
+Login with the Heroku command line: 
 
     $ heroku login
 
