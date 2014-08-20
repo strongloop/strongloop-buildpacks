@@ -4,7 +4,7 @@ StrongLoop includes LoopBack, an open source mobile framework for creating RESTf
 
 Also included in StrongLoop is StrongOps, an operational console specifically for Node.js applications. StrongOps provides deep performance monitoring including CPU profiling, EventLoop stats, and more.
 
-Follow the steps in <a href="http://docs.strongloop.com/display/SLC/Getting+started+with+StrongLoop+Controller">Getting started</a> to install Node and the StrongLoop command-line tool, then create a StrongLoop application on your local system.  
+Follow the steps in <a href="http://docs.strongloop.com/display/SLC/Getting+started+with+StrongLoop+Controller">Getting started</a> to install Node and the StrongLoop command-line tool, then create a StrongLoop application on your local system using <a href="http://docs.strongloop.com/display/LB/Create+a+simple+API">LoopBack</a> 
 Then follow the steps below to deploy the app to Heroku.
 
 <h5> Create Procfile and commit </h5>
