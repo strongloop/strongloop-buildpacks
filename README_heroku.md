@@ -4,64 +4,89 @@ StrongLoop Suite includes LoopBack, an open source mobile framework for creating
 
 Also included in StrongLoop Suite is StrongOps, an operational console specifically for Node.js applications. StrongOps provides deep performance monitoring including CPU profiling, EventLoop stats, and more.
 
-<h4> Prerequisites </h4>
+Follow the steps in <a href="http://docs.strongloop.com/display/SLC/Getting+started+with+StrongLoop+Controller">Getting started</a> to install Node and the StrongLoop command-line tool, then create a StrongLoop application on your local system.  
+Then follow the steps below to deploy the app to Heroku.
 
-<h5> Install StrongLoop tools </h5>
+<h5> Create Procfile and commit </h5>
 
-Install slc, the StrongLoop command line tool, with the following command: 
-    $ npm install -g strong-cli
+1. Create a Procfile in the root directory of your app that contains the following: 
+web: slc run
 
-On some systems, you may need to run the command with system privileges: 
-    $ sudo npm install -g strong-cli
+2. You will need to init and commit your code:
 
-This tool enables you to quickly create and scaffold LoopBack applications, and provides other capabilities. Follow the instructions in the next two sections to create and run the StrongLoop example and create your own LoopBack application.
+    $ git init
+    $ git add -A
+    $ git commit -m "init"
 
-<h5> Get the Heroku Toolbelt </h5>
+<h5> Push to Heroku </h5>
 
-Make sure you have a Heroku account and have installed the Heroku Toolbelt.
-Login with the heroku command line:
+The StrongLoop Heroku add-on provisions a monitoring account on StrongOps.
+
+1. If you haven't already done so, register an account on Heroku. 
+2. Install the Heroku Toolbelt.
+3. Login with the Heroku command line: 
 
     $ heroku login
 
-<h5> Create your app </h5>
-    
-    $ cd myapp
+4. Once you are ready to deploy your app, follow these steps:
 
-You will need to init and commit your code:
-
-    $ git init
-    $ git add .
-    $ git commit -m "init"
-
-<h5> Heroku setup </h5>
-
-Heroku apps require a Procfile. You’ll need to add this to the root of your app
-
-Procfile:
-web: slc run app.js
-
-or if you want to start your app with clustering -
-web: slc run --cluster no_of_workers
-
-Make sure you add the Procfile to your repository:
-
-    $ git add Procfile 
-    $ git commit -m "adding Procfile"    
-
-Get the buildpack
-
-Create your Heroku app using the buildpack. When it completes push to heroku master to complete the installation of StrongLoop Suite on your dyno.
+   a. Create your Heroku app using the StrongLoop buildpack with the first command below.  When it completes, push to Heroku master to complete the installation of the node and the strongloop cli tools on your dyno.
 
     $ heroku apps:create --buildpack https://github.com/strongloop/strongloop-buildpacks.git
     $ git push heroku master
 
-The installation of the buildpack will register you for StrongOps monitoring. 
+   b. Test it with this command:
+   
+    $ heroku open
 
-This will start your app with clustering enabled. If you want to monitor your app and supervise the cluster, you can create an account at strongloop.com.
-Use the following command to generate an API key and save it to  strongloop.json  in the current directory:
+<h5> Check your dashboard on Heroku </h5>
 
-    $ slc strongops
+Once you have created your app, it's time to look at the instrumentation.
 
-Check in the file and redeploy your app. Login at strongloop.com and monitor your app. 
+1. Go to Heroku and find your app. 
+2. Click Heroku app dashboard to view the various dynos and add-ons for your app. 
+3. Click StrongLoop add-on to view the StrongOps Control Panel. 
+4. Click  StrongOps Dashboard to access the StrongLoop Ops dashboard.
+
+<h5> Run your app in clustered mode through Heroku </h5>
+
+Update the start command in the Procfile:
+
+    $ web: slc run --cluster n 
+
+
+Commit your changes and redeploy the app:
+
+    $ git add Procfile
+    $ git commit -m "Started clustered app" Procfile
+    $ git push heroku master
+
+Once you have set this up, you can control the cluster through the StrongLoop dashboard.
+
+1. Go to Heroku and find your app. 
+2. Click Heroku app dashboard to view the various dynos and add-ons for your app. 
+3. Click StrongLoop add-on to view the StrongOps Control Panel. 
+4. Click  StrongOps Dashboard to access the StrongLoop Ops dashboard.
+5. Click on the Cluster tab to control your cluster. 
+
+
+<h5> Collect metrics for your app using StrongLoop Agent </h5>
+
+Update the start command in the Procfile:
+
+    $ web: slc run --metrics STATS
+
+Commit your changes and redeploy the app:
+
+    $ git add Procfile
+    $ git commit -m "Collect metrics using strong-agent" Procfile
+    $ git push heroku master
+
+For more information on how to use StrongLoop Agent API, refer to <a href="http://docs.strongloop.com/display/SLA/Using+third-party+consoles">Using third-party consoles.</a>
+
+
+
+
 
  
+
