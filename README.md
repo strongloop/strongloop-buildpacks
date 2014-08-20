@@ -1,66 +1,96 @@
-### StrongLoop Suite Buildpack for Pivotal's CloudFoundry
+### StrongLoop Suite Buildpack for Heroku 
 
 StrongLoop Suite includes LoopBack, an open source mobile framework for creating RESTful, JSON, and other APIs. LoopBack ships with a mobile SDK and can be easily extended via community npm modules.
 
 Also included in StrongLoop Suite is StrongOps, an operational console specifically for Node.js applications. StrongOps provides deep performance monitoring including CPU profiling, EventLoop stats, and more.
 
-Finally, StrongLoop Suite is built on top of StrongNode, a supported package of Node.js. StrongNode contains certified and tested modules for developing, testing and maintaining enterprise Node.js applications. The StrongNode package also includes advanced debugging, clustering, support for private npm registries and other enterprise tools
+Follow the steps in <a href="http://docs.strongloop.com/display/SLC/Getting+started+with+StrongLoop+Controller">Getting started</a> to install Node and the StrongLoop command-line tool, then create a StrongLoop application on your local system.  
+Then follow the steps below to deploy the app to Heroku.
 
-<h4> Prerequisites </h4>
+<h5> Create Procfile and commit </h5>
 
-<h5> Get StrongLoop Suite </h5>
+Create a Procfile in the root directory of your app that contains the following:
+    web: slc run
 
-Download and install [StrongLoop Suite](http://www.strongloop.com/strongloop-suite/downloads/)
+To deploy, add your application to a Git repository.
 
-<h5> Get the Cloud Foundry command line tool </h5>
+    $ git init
+    $ git add -A
+    $ git commit -a -m "Initial Commit"
 
-Create an account on http://run.pivotal.io/
+Note : For faster deployment time, delete the application's node-modules directory.
 
-Install the cf command line tools, and check their official CLI guide here:
-http://docs.cloudfoundry.com/docs/using/managing-apps/cf/
 
-    $ gem install cf
-     
-Login into the Cloud Foundry PaaS:
+<h5> Push to Heroku </h5>
 
-    $ cf target api.run.pivotal.io
-    $ cf login
+The StrongLoop Heroku add-on provisions a monitoring account on StrongOps.
 
-<h4> How to use the Strongloop Suite </h4>
+If you haven't already done so, register an account on Heroku. 
+Install the Heroku Toolbelt.
+Login with the Heroku command line: 
 
-Quickly get started on how to use StrongLoop Suite, StrongNode and StrongOps by heading over to [Quickstart] (http://docs.strongloop.com/strongops/#quick-start)
-Or 
-Explore the entire [documentation](http://docs.strongloop.com/).
+    $ heroku login
 
-<h4> Deploying on Cloud Foundry </h4>
+4. Once you are ready to deploy your app, follow these steps:
 
-Once you have created a sample app, please also add a **Procfile** in the root folder of your app (same place as **package.json**).
-The only line in this **Procfile** should be the start command of your web app.
+   a. Create your Heroku app using the StrongLoop buildpack with the first command below.  When it completes, push to Heroku master to complete the installation of the node and the strongloop cli tools on your dyno.
 
-For example:
+    $ heroku apps:create --buildpack https://github.com/strongloop/strongloop-buildpacks.git
+    $ git push heroku master
 
-    $ cat Procfile
-    web: slc run .
+   b. Test it with this command:
 
-When you are satisfied that all's ok, get ready to push your app to Cloud Foundry.
+    $ heroku open
 
-There is a trick to speed up your push process and avoid possible conflict - remove local **node_modules** before push:
+<h5> Check your dashboard on Heroku </h5>
 
-    $ rm -rf node_modules
-    
-    $ cf push --buildpack=https://github.com/strongloop/dist-paas-buildpack
+Once you have created your app, it's time to look at the instrumentation.
 
-Note:  The first time you run cf push, you will need to specify all the
-       parameters - this will create a new application at Cloud Foundry.
-       Default values will work fine if you just keep pressing Enter :)
+1. Go to Heroku and find your app. 
+2. Click Heroku app dashboard to view the various dynos and add-ons for your app. 
+3. Click StrongLoop add-on to view the StrongOps Control Panel. 
+4. Click  StrongOps Dashboard to access the StrongLoop Ops dashboard.
 
-Subsequent pushes just need the `cf push` command - you only need to
-specify all those options the first time you create the app (push).
+<h5> Run your app in clustered mode through Heroku </h5>
 
-This will now download and configure StrongLoop Suite on Cloud Foundry,
-install the dependencies as specified in the sample application's
-package.json file (or npm-shrinkwrap.json if one exists).
+Update the start command in the Procfile:
 
-That's it, you can now checkout your application at the
-app url/domain you set for your Cloud Foundry app.
+    $ web: slc run --cluster n 
+
+
+Commit your changes and redeploy the app:
+
+    $ git add Procfile
+    $ git commit -m "Started clustered app" Procfile
+    $ git push heroku master
+
+Once you have set this up, you can control the cluster through the StrongLoop dashboard.
+
+1. Go to Heroku and find your app. 
+2. Click Heroku app dashboard to view the various dynos and add-ons for your app. 
+3. Click StrongLoop add-on to view the StrongOps Control Panel. 
+4. Click  StrongOps Dashboard to access the StrongLoop Ops dashboard.
+5. Click on the Cluster tab to control your cluster. 
+
+
+<h5> Collect metrics for your app using StrongLoop Agent </h5>
+
+Update the start command in the Procfile:
+
+    $ web: slc run --metrics STATS
+
+Commit your changes and redeploy the app:
+
+    $ git add Procfile
+    $ git commit -m "Collect metrics using strong-agent" Procfile
+    $ git push heroku master
+
+For more information on how to use StrongLoop Agent API, refer to <a href="http://docs.strongloop.com/display/SLA/Using+third-party+consoles">Using third-party consoles.</a>
+
+
+
+
+
+ 
+
 
