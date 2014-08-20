@@ -9,9 +9,8 @@ Then follow the steps below to deploy the app to Heroku.
 
 <h5> Create Procfile and commit </h5>
 
-Create a Procfile in the root directory of your app that contains the following:  web: slc run
-
-Update package.json to use the latest stable version of node. 
+1. Create a Procfile in the root directory of your app that contains the following:  web: slc run
+2. Update package.json to use the latest stable version of node. 
     
     {
         "engines": {
@@ -19,13 +18,11 @@ Update package.json to use the latest stable version of node.
         }
     }
 
-To deploy, add your application to a Git repository.
+3. To deploy, add your application to a Git repository.
  
     $ git init
     $ git add -A
     $ git commit -a -m "Initial Commit"
-
-
 
 Note : For faster deployment time, delete the application's node-modules directory.
 
