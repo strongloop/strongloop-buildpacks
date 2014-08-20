@@ -9,14 +9,23 @@ Then follow the steps below to deploy the app to Heroku.
 
 <h5> Create Procfile and commit </h5>
 
-Create a Procfile in the root directory of your app that contains the following:
-    web: slc run
+Create a Procfile in the root directory of your app that contains the following:  web: slc run
+
+Update package.json to use the latest stable version of node. 
+    
+    {
+        "engines": {
+            "node": "0.10.x"
+        }
+    }
 
 To deploy, add your application to a Git repository.
-
+ 
     $ git init
     $ git add -A
     $ git commit -a -m "Initial Commit"
+
+
 
 Note : For faster deployment time, delete the application's node-modules directory.
 
@@ -39,8 +48,8 @@ Login with the Heroku command line:
         $ git push heroku master
 
    Test it with this command:
-
-    $ heroku open
+   
+        $ heroku open
 
 <h5> Check your dashboard on Heroku </h5>
 
@@ -49,7 +58,6 @@ Once you have created your app, it's time to look at the instrumentation.
 1. Go to Heroku and find your app. 
 2. Click Heroku app dashboard to view the various dynos and add-ons for your app. 
 3. Select StrongLoop add-on to enable StrongOps monitoring. 
-Note : If you used StrongLoop buildpack to create your application, you dont need to require strong-agent.
 4. Click  StrongOps Dashboard to access the StrongLoop Ops dashboard.
 
 <h5> Run your app in clustered mode through Heroku </h5>
@@ -93,6 +101,7 @@ For more information on how to use StrongLoop Agent API, refer to <a href="http:
 
 
  
+
 
 
 
