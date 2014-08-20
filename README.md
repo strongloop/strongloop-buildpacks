@@ -1,4 +1,4 @@
-### StrongLoop Buildpack for Heroku 
+# StrongLoop Buildpack for Heroku 
 
 StrongLoop includes LoopBack, an open source mobile framework for creating RESTful, JSON, and other APIs. LoopBack ships with a mobile SDK and can be easily extended via community npm modules.
 
@@ -7,7 +7,7 @@ Also included in StrongLoop is StrongOps, an operational console specifically fo
 Follow the steps in <a href="http://docs.strongloop.com/display/SLC/Getting+started+with+StrongLoop+Controller">Getting started</a> to install Node and the StrongLoop command-line tool, then create a StrongLoop application on your local system.  
 Then follow the steps below to deploy the app to Heroku.
 
-<h5> Create Procfile and commit </h5>
+## Create Procfile and commit 
 
 1. Create a Procfile in the root directory of your app that contains the following:  web: slc run
 2. Update package.json to use the latest stable version of node. 
@@ -27,7 +27,7 @@ Then follow the steps below to deploy the app to Heroku.
 Note : For faster deployment time, delete the application's node-modules directory.
 
 
-<h5> Push to Heroku </h5>
+## Push to Heroku
 
 The StrongLoop Heroku add-on provisions a monitoring account on StrongOps.
 
@@ -48,7 +48,7 @@ Login with the Heroku command line:
    
         $ heroku open
 
-<h5> Check your dashboard on Heroku </h5>
+## Check your dashboard on Heroku
 
 Once you have created your app, it's time to look at the instrumentation.
 
@@ -57,7 +57,7 @@ Once you have created your app, it's time to look at the instrumentation.
 3. Select StrongLoop add-on to enable StrongOps monitoring. 
 4. Click  StrongOps Dashboard to access the StrongLoop Ops dashboard.
 
-<h5> Run your app in clustered mode through Heroku </h5>
+## Run your app in clustered mode through Heroku
 
 Update the start command in the Procfile:
 
@@ -79,7 +79,7 @@ Once you have set this up, you can control the cluster through the StrongLoop da
 5. Click on the Cluster tab to control your cluster. 
 
 
-<h5> Collect metrics for your app using StrongLoop Agent </h5>
+## Collect metrics for your app using StrongLoop Agent 
 
 Update the start command in the Procfile:
 
