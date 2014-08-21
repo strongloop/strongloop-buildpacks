@@ -1,6 +1,6 @@
 # StrongLoop Buildpack for Heroku 
 
-StrongLoop includes:
+StrongLoop provides:
  * LoopBack, an open-source Node.js framework that enables you to create dynamic end-to-end REST APIs with little or no coding. For more information on LoopBack, see http://loopback.io.
  * StrongLoop Controller, a Node devops system.  See [StrongLoop Controller docs](http://docs.strongloop.com/display/SLC/StrongLoop+Controller) for more information.
  * StrongLoop Agent (StrongOps), an operational console for Node.js applications that provides deep performance monitoring including CPU profiling, event loop statistics, and more.  See [StrongLoop Agent docs](http://docs.strongloop.com/pages/viewpage.action?pageId=3834736) for more information.
