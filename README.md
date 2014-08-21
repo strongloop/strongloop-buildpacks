@@ -1,8 +1,9 @@
 # StrongLoop Buildpack for Heroku 
 
-StrongLoop includes LoopBack, an open source mobile framework for creating RESTful, JSON, and other APIs. LoopBack ships with a mobile SDK and can be easily extended via community npm modules.
-
-Also included in StrongLoop is StrongOps, an operational console specifically for Node.js applications. StrongOps provides deep performance monitoring including CPU profiling, event loop statistics, and more.
+StrongLoop includes:
+ * LoopBack, an open-source Node.js framework that enables you to create dynamic end-to-end REST APIs with little or no coding. For more information on LoopBack, see http://loopback.io.
+ * StrongLoop Controller, a Node devops system.  See [StrongLoop Controller docs](http://docs.strongloop.com/display/SLC/StrongLoop+Controller) for more information.
+ * StrongLoop Agent (StrongOps), an operational console for Node.js applications that provides deep performance monitoring including CPU profiling, event loop statistics, and more.  See [StrongLoop Agent docs](http://docs.strongloop.com/pages/viewpage.action?pageId=3834736) for more information.
 
 Follow the steps in <a href="http://docs.strongloop.com/display/SLC/Getting+started+with+StrongLoop+Controller">Getting started</a> to install Node and the StrongLoop command-line tool, then create a StrongLoop application on your local system using the <a href="http://docs.strongloop.com/display/LB/Create+a+simple+API">slc loopback</a> command.
 
