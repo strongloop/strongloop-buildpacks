@@ -1,108 +1,179 @@
-# StrongLoop Buildpack for Heroku 
-
 StrongLoop provides:
- * LoopBack, an open-source Node.js framework that enables you to create dynamic end-to-end REST APIs with little or no coding. For more information on LoopBack, see http://loopback.io.
+
+ * LoopBack, an open-source Node.js framework that enables you to create dynamic end-to-end REST APIs with little or no coding. For more information, see http://loopback.io.
  * StrongLoop Controller, a Node devops system.  See [StrongLoop Controller docs](http://docs.strongloop.com/display/SLC/StrongLoop+Controller) for more information.
  * StrongLoop Agent (StrongOps), an operational console for Node.js applications that provides deep performance monitoring including CPU profiling, event loop statistics, and more.  See [StrongLoop Agent docs](http://docs.strongloop.com/pages/viewpage.action?pageId=3834736) for more information.
 
-Follow the steps in <a href="http://docs.strongloop.com/display/SLC/Getting+started+with+StrongLoop+Controller">Getting started</a> to install Node and the StrongLoop command-line tool, then create a StrongLoop application on your local system using the <a href="http://docs.strongloop.com/display/LB/Create+a+simple+API">slc loopback</a> command.
+The StrongLoop Heroku Buildpack installs the StrongLoop Controller command-line tool (slc) and the add-on provisions a
+ [StrongOps](http://www.strongloop.com/ops) monitoring account.
 
-Then follow the steps below to deploy the app to Heroku.
+## Prerequisites
 
-## Create Procfile and commit 
+Before starting, on your local system:
 
-1. Create a Procfile in the root directory of your app that contains the following:  web: slc run
-2. Update package.json to use the latest stable version of node.
-    
-        {
-            "engines": {
-                "node": "0.10.x"
-            }
-        }
+ - If you have not already done so, install Node.js : [Download native installers](http://nodejs.org/download)
+ for Windows or Mac OS; for Linux,
+ see [Installing Node.js via package manager](https://github.com/joyent/node/wiki/Installing-Node.js-via-package-manager).
+ - Install StrongLoop software:
+   ```term
+   $  npm install -g strongloop
+   ```
+ - Make sure you have installed the [Heroku Toolbelt](https://toolbelt.heroku.com/).
 
-3. To deploy, add your application to a Git repository.
- 
-        $ git init
-        $ git add -A
-        $ git commit -a -m "Initial Commit"
+## Create your app
 
-Note : For faster deployment time, delete the application's node-modules directory.
+Follow the instructions in 
+[Getting started with LoopBack](http://docs.strongloop.com/display/LB/Getting+started+with+LoopBack) to create a LoopBack application.
 
+Just enter:
 
-## Push to Heroku
+```term
+$ slc loopback
+```
 
-The StrongLoop Heroku add-on provisions a monitoring account on StrongOps.
+You'll be prompted to pick a name and directory for the new application; for example, if you entered `myapp` for the application and
+directory name:
 
-If you haven't already done so, register an account on Heroku. 
-Install the Heroku Toolbelt.
-Login with the Heroku command line: 
+```
+$ cd myapp
+```
+Update `package.json` to add the following line so the app will use the latest stable version of Node.js:
 
-    $ heroku login
+```term
+...
+    "engines": {
+        "node": "0.10.x"
+    }
+...
+```
 
-Once you are ready to deploy your app, follow these steps:
+Then create a Git repository and commit your code:
 
-1. Create your Heroku app using the StrongLoop buildpack with the first command below.  When it completes, push to Heroku master to complete the installation of the node and the strongloop cli tools on your dyno.
+```term
+$ git init
+$ git add . 
+$ git commit -m "init"
+```
 
-        $ heroku apps:create --buildpack https://github.com/strongloop/strongloop-buildpacks.git
-        $ git push heroku master
+## Heroku setup
 
-1. Test it with this command:
-   
-        $ heroku open
+Create a Procfile in the root directory of your app that contains the following: 
 
-## Check your dashboard on Heroku
+    web: slc run 
 
-Once you have created your app, it's time to look at the instrumentation.
+Make sure you add the Procfile to your repository:
 
-1. Go to **Heroku** and find your app. 
-2. Click **Heroku app dashboard** to view the various dynos and add-ons for your app. 
-3. Select **StrongLoop add-on** to enable StrongOps monitoring. 
-4. Click **StrongOps Dashboard** to access the StrongLoop Ops dashboard.
+```term
+$ git add Procfile 
+$ git commit -m "adding Procfile"
+```
 
-## Run your app in clustered mode through Heroku
+### Get the buildpack
 
-Update the start command in the Procfile:
+Login with the Heroku command line:
 
-    $ web: slc run --cluster n 
+```term
+$ heroku login
+```
 
+Create your Heroku app using the buildpack. When it completes, push to Heroku
+master to complete the installation of StrongLoop on your dyno.
+
+```term
+$ heroku apps:create --buildpack https://github.com/strongloop/strongloop-buildpacks.git
+$ git push heroku master
+```
+
+Test it out
+
+```term
+$ heroku open
+```
+
+### How to check your dashboard on Heroku
+Once you have created your app, its time to look at the instrumentation. 
+Navigate to the [Heroku dashboard](https://dashboard.heroku.com)
+and find your app. Once you've found your app, click on **Heroku app dashboard** to
+view the various dynos and add-ons for your app. Click on the StrongLoop add-on to view the StrongOps Control Panel.
+The StrongLoop Ops dashboard is
+accessible by clicking on the grey button "StrongOps Dashboard".
+
+The dashboard can also be accessed via the CLI:
+
+```term
+$ heroku addons:open strongloop
+Opening strongloop for sharp-mountain-4005…
+```
+
+## Run your app in a cluster
+
+To run your application in a cluster, update the start command in the Procfile:
+
+```term
+$ web: slc run --cluster <n>
+```
+
+Where `<n>` is a postive integer indicating the number of worker processes to use.
 
 Commit your changes and redeploy the app:
 
-    $ git add Procfile
-    $ git commit -m "Started clustered app" Procfile
-    $ git push heroku master
+```term
+$ git add Procfile
+$ git commit -m "Started clustered app" Procfile
+$ git push heroku master
+```
 
-Once you have set this up, you can control the cluster through the StrongLoop dashboard.
+Once you have set this up, you can control the cluster through the StrongLoop dashboard: simply click on the **Cluster** tab.
 
-1. Go to Heroku and find your app. 
-2. Click Heroku app dashboard to view the various dynos and add-ons for your app. 
-3. Click StrongLoop add-on to view the StrongOps Control Panel. 
-4. Click  StrongOps Dashboard to access the StrongLoop Ops dashboard.
-5. Click on the Cluster tab to control your cluster. 
+## Collect application metrics
 
+To collect metrics to send to a StatsD server, update the start command in the Procfile:
 
-## Collect metrics for your app using StrongLoop Agent 
+```term
+$ web: slc run --metrics <statsd-url>
+```
 
-Update the start command in the Procfile:
-
-    $ web: slc run --metrics STATS
+Where `<statsd-url>` is the URL of your StatsD server with format `statsd:[//host[:port]][/scope]`.
 
 Commit your changes and redeploy the app:
 
-    $ git add Procfile
-    $ git commit -m "Collect metrics using strong-agent" Procfile
-    $ git push heroku master
+```term
+$ git add Procfile
+$ git commit -m "Collect metrics using strong-agent" Procfile
+$ git push heroku master
+```
+For more information on how to use the StrongLoop Agent API to get performance metrics, see
+[On-premises monitoring](http://docs.strongloop.com/display/SLA/On-premises+monitoring).
 
-For more information on how to use StrongLoop Agent API, refer to <a href="http://docs.strongloop.com/display/SLA/Using+third-party+consoles">Using third-party consoles.</a>
+## Troubleshooting
 
+After configuration, StrongOps is automatic. If you should experience any issues, please let us know immediately by
+[email](mailto:callback@strongloop.com)
 
+## Migrating between plans
 
+**NOTE: Carefully manage the migration timing to ensure proper application function during the migration process.**
 
+Use the `heroku addons:upgrade` command to migrate to a new plan.
 
- 
+```term
+$ heroku addons:upgrade strongloop:newplan
+-----> Upgrading strongloop:newplan to sharp-mountain-4005... done, v18 ($49/mo)
+       Your plan has been updated to: strongloop:newplan
+```
 
+## Removing the add-on
 
+Remove StrongOps with the following command.
 
+**WARNING: This will destroy all associated data and cannot be undone!**
 
+```term
+$ heroku addons:remove strongloop
+-----> Removing strongloop from sharp-mountain-4005... done, v20 (free)
+```
 
+## Support
 
+Submit all StrongOps support and runtime issues via the [Heroku Support channels](support-channels).
+Any non-support related issues or product feedback is welcome at [callback@strongloop.com](mailto:callback@strongloop.com). 
